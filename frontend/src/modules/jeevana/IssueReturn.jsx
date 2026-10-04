@@ -20,7 +20,9 @@ export default function IssueReturn({ setMsg }) {
             setTx(t);
         });
 
-    useEffect(load, []);
+    useEffect(() => {
+        load();
+    }, []);
 
     const issue = async () => {
         try {
@@ -31,6 +33,7 @@ export default function IssueReturn({ setMsg }) {
                     member_id: member
                 })
             });
+
             setMsg('Book issued successfully');
             setBook('');
             load();
@@ -44,6 +47,7 @@ export default function IssueReturn({ setMsg }) {
             await api(`/transactions/${id}/return/`, {
                 method: 'POST'
             });
+
             setMsg('Book returned successfully');
             load();
         } catch (e) {
@@ -55,12 +59,14 @@ export default function IssueReturn({ setMsg }) {
         <>
             <div className="panel">
                 <h2>Issue Book</h2>
+
                 <div className="form-row">
                     <select
                         value={book}
                         onChange={e => setBook(e.target.value)}
                     >
                         <option value="">Select available book</option>
+
                         {books
                             .filter(b => b.available_copies > 0)
                             .map(b => (
@@ -75,6 +81,7 @@ export default function IssueReturn({ setMsg }) {
                         onChange={e => setMember(e.target.value)}
                     >
                         <option value="">Select member</option>
+
                         {members
                             .filter(m => m.active)
                             .map(m => (

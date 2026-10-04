@@ -17,7 +17,9 @@ export default function Members({ setMsg }) {
 
     const load = () => api('/members/').then(setMembers);
 
-    useEffect(load, []);
+    useEffect(() => {
+        load();
+    }, []);
 
     const add = async (e) => {
         e.preventDefault();
