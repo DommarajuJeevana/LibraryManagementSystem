@@ -1,0 +1,13 @@
+TC_ID,Owner,Module,Precondition,Steps,Expected Result,Actual Result,Status,Defect ID
+TC-V01,Vengasree,Admin,Backend and frontend running,Login with admin/Admin@123,Dashboard opens,,,
+TC-V02,Vengasree,Book Management,Logged in as admin,Open Book Management and add valid book,Book appears in list,,,
+TC-V03,Vengasree,Book Management,Logged in as admin,Delete a book,Book is removed,,,
+TC-M01,Mounika,Authentication,Login page open,Enter wrong password,Error message displayed,,,
+TC-M02,Mounika,Authentication,Login page open,Register with unique username,Account created,,,
+TC-M03,Mounika,Member Management,Logged in,Add valid member,Member appears in list,,,
+TC-G01,Gagana,Search,Logged in,Search for Clean Code,Matching book appears,,,
+TC-G02,Gagana,Availability,Logged in,Open Search & Availability,Availability status is visible,,,
+TC-J01,Jeevana,Issue,At least one available book and active member,Issue selected book,Transaction becomes Issued and availability decreases,,,
+TC-J02,Jeevana,Return,An issued transaction exists,Click Return,Transaction becomes Returned and availability increases,,,
+TC-MP01,Madhupriya,Dashboard,Logged in,Open Dashboard,Statistics are displayed,,,
+TC-MP02,Madhupriya,Reports,Logged in,Open Transactions/Reports,Transaction report is displayed,,,
