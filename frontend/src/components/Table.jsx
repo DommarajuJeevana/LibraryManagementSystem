@@ -1,0 +1,2 @@
+import React from 'react';
+export default function Table({rows,cols,action}){return <div className="panel table-wrap"><table><thead><tr>{cols.map(c=><th key={c}>{c.replaceAll('_',' ')}</th>)}{action&&<th>Action</th>}</tr></thead><tbody>{rows.map(r=><tr key={r.id}>{cols.map(c=><td key={c}>{String(r[c]??'')}</td>)}{action&&<td>{action(r)}</td>}</tr>)}{!rows.length&&<tr><td colSpan={cols.length+(action?1:0)}>No records found.</td></tr>}</tbody></table></div>}
