@@ -5,7 +5,7 @@ from django.utils import timezone
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Book, Member, Transaction
@@ -36,15 +36,48 @@ class MeView(APIView):
         u=request.user
         return Response({'id':u.id,'username':u.username,'name':u.get_full_name() or u.username,'is_staff':u.is_staff})
 
+class IsAdminUser(BasePermission):
+    """
+    Only staff/admin users are allowed.
+    """
+    def has_permission(self, request, view):
+        return bool(
+            request.user
+            and request.user.is_authenticated
+            and request.user.is_staff
+        )
+
 class BookViewSet(viewsets.ModelViewSet):
-    queryset=Book.objects.all().order_by('title'); serializer_class=BookSerializer
+    queryset = Book.objects.all().order_by('title')
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsAdminUser()]
+        return [IsAuthenticated()]
+
     def get_queryset(self):
-        qs=super().get_queryset(); q=self.request.query_params.get('search','').strip()
-        if q: qs=qs.filter(title__icontains=q) | qs.filter(author__icontains=q) | qs.filter(isbn__icontains=q) | qs.filter(category__icontains=q)
+        qs = super().get_queryset()
+        q = self.request.query_params.get('search', '').strip()
+
+        if q:
+            qs = qs.filter(
+                title__icontains=q
+            ) | qs.filter(
+                author__icontains=q
+            ) | qs.filter(
+                isbn__icontains=q
+            ) | qs.filter(
+                category__icontains=q
+            )
+
         return qs
 
 class MemberViewSet(viewsets.ModelViewSet):
-    queryset=Member.objects.select_related('user').all().order_by('-joined_date'); serializer_class=MemberSerializer
+    queryset = Member.objects.select_related('user').all().order_by('-joined_date')
+    serializer_class = MemberSerializer
+    permission_classes = [IsAdminUser]
     def create(self, request, *args, **kwargs):
         username=request.data.get('username','').strip(); password=request.data.get('password','') or 'Member@123'; first=request.data.get('first_name','').strip(); last=request.data.get('last_name','').strip(); email=request.data.get('email','').strip(); phone=request.data.get('phone','').strip(); address=request.data.get('address','').strip()
         if not username: return Response({'detail':'Username is required.'},status=400)
