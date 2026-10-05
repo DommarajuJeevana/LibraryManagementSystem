@@ -33,11 +33,13 @@ function App() {
 
     const items = [
         ['dashboard', 'Dashboard'],
-        ['books', 'Book Management'],
-        ['members', 'Member Management'],
-        ['search', 'Search & Availability'],
-        ['issue', 'Issue / Return'],
-        ['reports', 'Transactions / Reports']
+        ...(user.is_staff ? [
+            ['books', 'Book Management'],
+            ['members', 'Member Management'],
+            ['issue', 'Issue / Return'],
+            ['reports', 'Transactions / Reports']
+        ] : []),
+        ['search', 'Search & Availability']
     ];
 
     return (
