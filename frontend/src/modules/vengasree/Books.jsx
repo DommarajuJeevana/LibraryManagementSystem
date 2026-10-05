@@ -15,7 +15,9 @@ export default function Books({ setMsg }) {
 
     const load = () => api('/books/').then(setBooks);
 
-    useEffect(load, []);
+    useEffect(() => {
+        load();
+    }, []);
 
     const add = async (e) => {
         e.preventDefault();

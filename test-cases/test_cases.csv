@@ -1,0 +1,13 @@
+TC_ID,Owner,Module,Test Scenario,Expected Result,Automation File
+TC-V01,Vengasree,Admin,Login with valid admin credentials,Dashboard opens,test_admin_books.py
+TC-V02,Vengasree,Book Management,Add a new book,Book appears in list,test_admin_books.py
+TC-V03,Vengasree,Book Management,Delete an existing book,Book is removed,test_admin_books.py
+TC-M01,Mounika,Authentication,Login with invalid password,Error message is displayed,test_auth_members.py
+TC-M02,Mounika,Authentication,Register a new account,Account is created and user is logged in,manual/API + UI
+TC-M03,Mounika,Member Management,Add a member,Member appears in list,test_auth_members.py
+TC-G01,Gagana,Search,Search by title,Matching books appear,test_search_availability.py
+TC-G02,Gagana,Availability,Check available copies,Availability status is displayed,test_search_availability.py
+TC-J01,Jeevana,Issue,Issue an available book,Transaction status becomes Issued,test_issue_return.py
+TC-J02,Jeevana,Return,Return an issued book,Transaction status becomes Returned and copy is restored,test_issue_return.py
+TC-MP01,Madhupriya,Dashboard,Open dashboard,Statistics are displayed,test_dashboard_reports.py
+TC-MP02,Madhupriya,Reports,Open transaction report,Transactions and total count are displayed,test_dashboard_reports.py
