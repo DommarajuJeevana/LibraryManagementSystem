@@ -5,9 +5,24 @@ from .models import Book, Member, Transaction
 
 
 class BookSerializer(serializers.ModelSerializer):
+    availability = serializers.SerializerMethodField()
+
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = [
+            'id',
+            'title',
+            'author',
+            'isbn',
+            'category',
+            'total_copies',
+            'available_copies',
+            'created_at',
+            'availability',
+        ]
+
+    def get_availability(self, obj):
+        return 'Available' if obj.available_copies > 0 else 'Not Available'
 
 
 class MemberSerializer(serializers.ModelSerializer):

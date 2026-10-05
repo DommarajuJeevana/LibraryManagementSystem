@@ -33,7 +33,7 @@ def test_member_management():
         # Open Members module
         members_link = wait.until(
             EC.element_to_be_clickable(
-                (By.XPATH, "//button[contains(text(), 'Members')]")
+                (By.XPATH, "//button[contains(text(), 'Member Management')]")
             )
         )
         members_link.click()
